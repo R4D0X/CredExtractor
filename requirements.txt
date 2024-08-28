@@ -1,4 +1,2 @@
 ripgrep
-argparse==3.2
-colorama==0.4.6
-figlet
+argparse
