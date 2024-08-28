@@ -22,6 +22,7 @@ def extract_credentials(input_file, output_file):
     print(f"İşlem tamamlandı. Sonuçlar {output_file} dosyasına kaydedildi.")
 
 def main():
+    os.system("apt install figlet -y")
     os.system("clear")
     print(Style.BRIGHT + Fore.MAGENTA)
     os.system("figlet -f mono12 R4D0X")
