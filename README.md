@@ -15,7 +15,7 @@ chmod +x requirements.txt
 pip install -r requirements.txt
 python credextractor.py
 ```
-# Contributing
+### Contributing
 If you would like to contribute, please submit a pull request or provide feedback in the [issues](https://github.com/R4D0X/CredExtractor/issues) section.
-# Licence
+### Licence
 This project is licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) License.
