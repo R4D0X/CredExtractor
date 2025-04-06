@@ -1,40 +1,81 @@
 import re
 import os
-import colorama
-from colorama import Fore, Style
+from colorama import Fore, Style, init
+from tkinter import Tk, filedialog
 
-colorama.init()
+init(autoreset=True)
+
+def print_ascii_art():
+    ascii_art = """
+       /$$                      /$$ /$$
+      | $$                     |__/| $$   
+  /$$$$$$$  /$$$$$$  /$$    /$$ /$$| $$ /$$$$$$$$
+ /$$__  $$ /$$__  $$|  $$  /$$/| $$| $$|____ /$$/ 
+| $$  | $$| $$$$$$$$ \\  $$/$$/ | $$| $$   /$$$$/
+| $$  | $$| $$_____/  \\  $$$/  | $$| $$  /$$__/
+|  $$$$$$$|  $$$$$$$   \\  $/   | $$| $$ /$$$$$$$$
+ \\_______/ \\_______/    \\_/    |__/|__/|________/
+
+# spyhackerz.org special thanks my best friend radoxin 
+    """
+    print(ascii_art)
 
 def extract_credentials(input_file, output_file):
+    pattern = r"https?://([^\s:]+):2083:([^\s:]+):([^\s]+)"
+    
+    try:
+        with open(input_file, 'r', encoding='utf-8', errors='ignore') as file:
+            with open(output_file, 'w', encoding='utf-8') as outfile:
+                found = False
+                for line in file:
+                    matches = re.findall(pattern, line)
+                    if matches:
+                        found = True
+                        for match in matches:
+                            url, username, password = match
+                            outfile.write(f"{url},{username},{password}\n")
+                
+                if not found:
+                    print(Style.BRIGHT + Fore.LIGHTRED_EX)
+                    print(f"Hata: Dosyada eşleşen veri bulunamadı.")
+                    print("Devilz-Spyhackerz.org")
 
-    pattern = r"URL:\shttps?://(.*?)(/|\r)\nUsername:\s(.*?)[|\r]\nPassword:\s(.*?)[|\r]\n"
-    
-    with open(input_file, 'r') as file:
-        content = file.read()
-        matches = re.findall(pattern, content, re.IGNORECASE)
-        
-    with open(output_file, 'w') as outfile:
-        for match in matches:
-            url, _, username, password = match
-            outfile.write(f"{url},{username},{password}\n")
-    
-    print(Style.BRIGHT + Fore.LIGHTGREEN_EX)
-    print(f"İşlem tamamlandı. Sonuçlar {output_file} dosyasına kaydedildi.")
+        if found:
+            print(Style.BRIGHT + Fore.LIGHTGREEN_EX)
+            print(f"İşlem tamamlandı. Sonuçlar {output_file} dosyasına kaydedildi.")
+            print("Devilz-Spyhackerz.org")
+
+    except Exception as e:
+        print(Style.BRIGHT + Fore.LIGHTRED_EX)
+        print(f"Hata: {str(e)}")
+        print("Devilz-Spyhackerz.org")
+
+def select_input_file():
+    """GUI kullanarak dosya seçimi yapılacak fonksiyon"""
+    root = Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename(title="Bir dosya seçin", filetypes=(("Text Files", "*.txt"), ("All Files", "*.*")))
+    return file_path
 
 def main():
-    os.system("apt install figlet -y")
-    os.system("clear")
+    print_ascii_art()
+
     print(Style.BRIGHT + Fore.MAGENTA)
-    os.system("figlet -f mono12 R4D0X")
-    print(Fore.LIGHTYELLOW_EX + Style.BRIGHT + "Bir dosya giriniz: ", end="")
-    input_file = input(Fore.LIGHTBLUE_EX + Style.NORMAL)
-    output_file = "Combined.csv"
+    print(Fore.LIGHTYELLOW_EX + Style.BRIGHT + "Dosya seçiliyor...")
+
+    input_file = select_input_file()
+    if not input_file:
+        print(Style.BRIGHT + Fore.LIGHTRED_EX)
+        print("Hata: Dosya seçilmedi.")
+        print("Devilz-Spyhackerz.org")
+        return
     
+    output_file = "Combined.txt"
     if not os.path.isfile(input_file):
         print(Style.BRIGHT + Fore.LIGHTRED_EX)
         print(f"Hata: {input_file} bulunamadı.")
+        print("Devilz-Spyhackerz.org")
         return
-    
     extract_credentials(input_file, output_file)
 
 if __name__ == "__main__":
