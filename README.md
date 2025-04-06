@@ -1,7 +1,7 @@
+# Updated by Devilz
+
 ## CredExtractor
 _CredExtractor_ is a Python application that extracts URL, username and password information from a file and saves this information in a file in CSV format. This project is useful for users who want to collect data and record credentials in an organized manner.
-
-![N|Radox](https://i.hizliresim.com/sbzh02g.png)
 
 ## Features
 - Regex Based Search: Finds the URL, username and password information in the file using regular expressions.
